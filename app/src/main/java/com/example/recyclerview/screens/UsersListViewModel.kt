@@ -27,7 +27,7 @@ class UsersListViewModel(
     }
 
     fun loadUsers(){
-
+        userService.addListener(listener)
     }
 
     fun deleteUser(user: User){

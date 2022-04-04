@@ -13,7 +13,7 @@ class UserService {
 
     init {
         val faker = Faker.instance()
-        users = (1..100).map { User(id = it.toLong(), name = faker.name().name(), company = faker.company().name(), photo = "https://s1.1zoom.ru/prev2/609/Men_Da_Yui_Bokeh_Negroid_Muscle_Glasses_608457_600x398.jpg") }.toMutableList()
+        users = (1..100).map { User(id = it.toLong(), name = faker.name().name(), company = faker.company().name(), photo = "https://www.kinonews.ru/insimgs/persimg/persimg1789.jpg") }.toMutableList()
     }
 
     fun getUsers(): List<User>{
