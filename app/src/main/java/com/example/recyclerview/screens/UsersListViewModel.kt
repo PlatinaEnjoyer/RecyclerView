@@ -37,6 +37,4 @@ class UsersListViewModel(
     fun moveUser(user: User, moveBy: Int){
         userService.moveUser(user, moveBy)
     }
-
-
 }

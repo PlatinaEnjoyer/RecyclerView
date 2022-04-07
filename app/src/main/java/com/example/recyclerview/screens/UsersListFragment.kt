@@ -18,7 +18,7 @@ class UsersListFragment : Fragment(  ) {
     private lateinit var binding: FragmentUsersListBinding
     private lateinit var adapter: UsersAdapter
 
-    private val viewModel: UsersListViewModel by viewModels{factory()}
+    private val viewModel: UsersListViewModel by viewModels{ factory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +36,7 @@ class UsersListFragment : Fragment(  ) {
             }
 
             override fun onUserDetails(user: User) {
+                navigator().showDetails(user)
             }
         })
 

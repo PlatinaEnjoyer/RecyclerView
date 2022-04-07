@@ -6,7 +6,6 @@ interface Navigator {
     fun showDetails(user: User){
     }
     fun goBack(){
-
     }
 
     fun toast(massageRes: Int){

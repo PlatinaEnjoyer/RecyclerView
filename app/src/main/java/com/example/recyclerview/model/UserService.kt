@@ -13,11 +13,19 @@ class UserService {
 
     init {
         val faker = Faker.instance()
-        users = (1..100).map { User(id = it.toLong(), name = faker.name().name(), company = faker.company().name(), photo = "https://www.kinonews.ru/insimgs/persimg/persimg1789.jpg") }.toMutableList()
+        users = (1..100).map { User(id = it.toLong(), name = faker.name().name(), company = faker.company().name(), photo = "https://picsum.photos/id/${it}/400") }.toMutableList()
     }
 
     fun getUsers(): List<User>{
         return users
+    }
+
+    fun getUserById(id: Long) : UserDetails {
+        val user = users.firstOrNull{it.id == id}
+        return UserDetails(
+            user = user!!,
+            details = Faker.instance().lorem().paragraphs(3).joinToString("\n\n")
+        )
     }
 
     fun deleteUser(user: User){
@@ -49,5 +57,4 @@ class UserService {
     private fun notifyChanges(){
         listeners.forEach{it.invoke(users)}  // что вот это делает и что вообще за листенеры
     }
-
 }

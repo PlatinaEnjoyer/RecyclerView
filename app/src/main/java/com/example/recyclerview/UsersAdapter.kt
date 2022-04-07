@@ -48,6 +48,7 @@ class UsersAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
+
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemUserBinding.inflate(inflater, parent, false)
 

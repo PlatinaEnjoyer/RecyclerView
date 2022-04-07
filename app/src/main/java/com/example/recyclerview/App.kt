@@ -5,6 +5,4 @@ import com.example.recyclerview.model.UserService
 
 class App : Application() {
    val userService = UserService()
-
-
 }
