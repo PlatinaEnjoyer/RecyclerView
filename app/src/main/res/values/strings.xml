@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">RecyclerView</string>
+    <string name="cant_load_user_details">Cannot load users details</string>
+    <string name="cant_delete_user">Cannot delete user</string>
+    <string name="user_deleted">User has been deleted successfully</string>
 </resources>

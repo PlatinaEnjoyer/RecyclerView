@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.recyclerview.databinding.FragmentUsersDetailBinding
 import com.example.recyclerview.databinding.FragmentUsersListBinding
+import com.example.recyclerview.tasks.SuccessResult
 
 class UsersDetailFragment :Fragment() {
     private lateinit var binding: FragmentUsersDetailBinding
@@ -28,15 +29,36 @@ class UsersDetailFragment :Fragment() {
     ): View? {
         binding = FragmentUsersDetailBinding.inflate(layoutInflater, container, false)
 
-        viewModel.usersDetails.observe(viewLifecycleOwner, Observer {
-            binding.textView.text = it.user.name
-            Glide.with(this).load(it.user.photo).circleCrop().into(binding.imageView)
-            binding.textView2.text = it.details
+        viewModel.actionGoBack.observe(viewLifecycleOwner, Observer {
+            it.getValue()?.let { navigator().goBack() }
         })
+
+        viewModel.actionShowToast.observe(viewLifecycleOwner, Observer {
+            it.getValue()?.let { messageRes -> navigator().toast(messageRes) }
+        })
+
+        viewModel.state.observe(viewLifecycleOwner, Observer {
+            binding.contentContainer.visibility = if (it.showContent) {
+                val userDetails = (it.userDetailsResult as SuccessResult).data
+                binding.textView.text = userDetails.user.name
+                    Glide.with(this)
+                        .load(userDetails.user.photo)
+                        .circleCrop()
+                        .into(binding.imageView)
+                binding.textView2.text = userDetails.details
+
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+
+            binding.progressbar.visibility = if (it.showProgress) View.VISIBLE else View.GONE
+            binding.button.isEnabled = it.enableDeleteButton
+        })
+
 
         binding.button.setOnClickListener {
             viewModel.deleteUser()
-            navigator().goBack()
         }
         return binding.root
     }

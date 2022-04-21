@@ -1,6 +1,7 @@
 package com.example.recyclerview.screens
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,11 @@ import com.example.recyclerview.UserActionListener
 import com.example.recyclerview.UsersAdapter
 import com.example.recyclerview.databinding.FragmentUsersListBinding
 import com.example.recyclerview.model.User
+import com.example.recyclerview.tasks.EmptyResult
+import com.example.recyclerview.tasks.ErrorResult
+import com.example.recyclerview.tasks.PendingResult
+import com.example.recyclerview.tasks.SuccessResult
+import java.lang.Error
 
 class UsersListFragment : Fragment(  ) {
     private lateinit var binding: FragmentUsersListBinding
@@ -26,26 +32,36 @@ class UsersListFragment : Fragment(  ) {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentUsersListBinding.inflate(inflater, container, false)
-        adapter = UsersAdapter(object : UserActionListener{
-            override fun onUserMove(user: User, moveBy: Int) {
-                viewModel.moveUser(user, moveBy)
-            }
+        adapter = UsersAdapter(viewModel)
 
-            override fun onUserDelete(user: User) {
-                viewModel.deleteUser(user)
-            }
+        viewModel.users.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is SuccessResult -> {
+                    binding.usersRecyclerView.visibility = View.VISIBLE
+                    adapter.users = it.data
+                }
+                is ErrorResult -> {
 
-            override fun onUserDetails(user: User) {
-                navigator().showDetails(user)
+                }
+                is PendingResult -> {
+
+                }
+                is EmptyResult -> {
+
+                }
             }
         })
 
-        viewModel.users.observe(viewLifecycleOwner, Observer { adapter.users = it })
+        viewModel.actionShowDetails.observe(viewLifecycleOwner, Observer {
+            it.getValue()?.let { user -> navigator().showDetails(user) }
+        })
 
         val layoutManager = LinearLayoutManager(requireContext())
 
         binding.usersRecyclerView.adapter = adapter
         binding.usersRecyclerView.layoutManager = layoutManager
+
+
 
         return binding.root
     }

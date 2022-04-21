@@ -41,6 +41,18 @@
         app:layout_constraintStart_toStartOf="@+id/userNameTextView"
         app:layout_constraintTop_toBottomOf="@+id/userNameTextView" />
 
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progressbar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_baseline_format_list_bulleted_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="4dp"
+        android:layout_margin="10dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
     <ImageView
         android:id="@+id/optionImageButton"
         android:layout_width="40dp"
