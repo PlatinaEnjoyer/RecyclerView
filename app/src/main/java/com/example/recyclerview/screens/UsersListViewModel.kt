@@ -2,7 +2,6 @@ package com.example.recyclerview.screens
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.recyclerview.UserActionListener
 import com.example.recyclerview.model.User
 import com.example.recyclerview.model.UserService
